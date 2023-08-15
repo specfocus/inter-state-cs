@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace XState
+﻿namespace XState
 {
     partial class StateNode<TContext, TStateSchema, TEvent, TTypestate, TServiceMap, TResolvedTypesMeta>
     {
         private StateTransition<TContext, TEvent> _Transition(
             StateValue stateValue,
-            State<TContext, TEvent> state,
+            State<TContext, TEvent, TStateSchema, TTypestate, TServiceMap> state,
             SCXML.Event<TEvent> _event
         )
         {

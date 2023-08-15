@@ -41,4 +41,13 @@
     public sealed class ActivityMap : Dictionary<string, ActivityDefinition<object, Event>>
     {
     }
+
+    public delegate DisposeActivityFunction ActivityConfig<TContext, TEvent>(
+        TContext ctx,
+        ActivityDefinition<TContext, TEvent> activity
+    )
+        where TContext : class
+        where TEvent : Event;
+
+    public delegate void DisposeActivityFunction();
 }

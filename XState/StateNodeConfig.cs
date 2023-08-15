@@ -33,16 +33,17 @@
         SingleOrArray<InvokeConfig<TContext, TEvent> | AnyStateMachine> Invoke { get; set; }
 
         // Mapping of event types to transitions
-        TransitionsConfig<TContext, TEvent, TEvent> On { get; set; }
+        TransitionsConfig<TContext, TEvent> On { get; set; }
 
         // Actions to execute on entering the state node
-        Actions<TContext, TEvent> OnEntry { get; set; }
+        // TODO: deprecate
+        Actions.Actions<TContext, TEvent, TEvent> OnEntry { get; set; }
 
         // Actions to execute on entering the state node
         BaseActions<TContext, TEvent, TEvent, TAction> Entry { get; set; }
 
         // Actions to execute on exiting the state node
-        Actions<TContext, TEvent> OnExit { get; set; }
+        Actions.Actions<TContext, TEvent, TEvent> OnExit { get; set; }
 
         // Actions to execute on exiting the state node
         BaseActions<TContext, TEvent, TEvent, TAction> Exit { get; set; }
@@ -54,7 +55,7 @@
         DelayedTransitions<TContext, TEvent> After { get; set; }
 
         // Transition to always take
-        TransitionConfigOrTarget<TContext, TEvent> Always { get; set; }
+        TransitionConfigOrTarget<TContext, TEvent, TEvent> Always { get; set; }
 
         // Activities to start/stop
         SingleOrArray<Activity<TContext, TEvent>> Activities { get; set; }

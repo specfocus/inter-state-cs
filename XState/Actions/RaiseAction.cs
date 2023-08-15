@@ -10,7 +10,7 @@
 
         SendExpr<TContext, TExpressionEvent, TEvent> EventExpression { get; set; }
 
-        int? Delay { get; set; }
+        Delay<TContext, TEvent>? Delay { get; set; }
 
         string? Id { get; set; }
     }
@@ -26,7 +26,7 @@
 
         public SendExpr<TContext, TExpressionEvent, TEvent> EventExpression { get; set; }
 
-        public int? Delay { get; set; }
+        public Delay<TContext, TEvent>? Delay { get; set; }
 
         public string? Id { get; set; }
     }

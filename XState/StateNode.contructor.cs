@@ -184,11 +184,11 @@
     }
     */
         public StateNode(
+            ContextProvider<TContext> context,
             // The raw config used to create the machine.
             StateNodeConfig<TContext, TStateSchema, TEvent, BaseActionObject> config,
             // The initial extended state
             MachineOptions<TContext, TEvent> options = null,
-            ContextProvider<TContext> context,
             StateNode<TContext, TStateSchema, TEvent, TTypestate, TServiceMap, TResolvedTypesMeta> parent = null,
             string key = null
         )

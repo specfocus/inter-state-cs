@@ -6,7 +6,7 @@ namespace XState
         : SingleOrArray<BaseAction<TContext, TExpressionEvent, TEvent, TAction>>
         where TContext : class
         where TExpressionEvent : Event
-        where TEvent : EventObject
+        where TEvent : Event
         where TAction : BaseActionObject
     { }
 }
