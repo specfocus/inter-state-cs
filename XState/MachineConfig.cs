@@ -27,7 +27,7 @@ namespace XState
     public class MachineConfig<TContext, TStateSchema, TEvent, TAction, TServiceMap, TTypesMeta>
         where TContext : class
         where TStateSchema : IStateSchema<TContext>
-        where TEvent : EventObject
+        where TEvent : Event
         where TAction : BaseActionObject
         where TServiceMap : ServiceMap
     {

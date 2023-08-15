@@ -6,8 +6,8 @@ namespace XState
     public static class StateMachineUtility
     {
         public const string NULL_EVENT = "";
-        public const char STATE_IDENTIFIER = "#";
-        public const char WILDCARD = "*";
+        public const char STATE_IDENTIFIER = '#';
+        public const char WILDCARD = '*';
 
         public static readonly Dictionary<string, object> EMPTY_OBJECT = new Dictionary<string, object>();
 
@@ -26,10 +26,12 @@ namespace XState
         }
 
         public static void ValidateArrayifiedTransitions<TContext, TEvent>(
-            StateNode<TContext, TEvent> stateNode,
+            StateNode<TContext, IStateSchema<TContext>, TEvent, Typestate<TContext>, ServiceMap, TypegenFlag> stateNode,
             string @event,
-            List<TransitionConfig<TContext, EventObject>> transitions)
-        {
+            List<TransitionConfig<TContext, Event>> transitions
+        )
+            where TContext : class
+            where TEvent : Event        {
             bool hasNonLastUnguardedTarget = transitions
                 .GetRange(0, transitions.Count - 1)
                 .Any(transition =>
@@ -38,8 +40,7 @@ namespace XState
                     (transition.Target is string || transition.Target is StateNode_<TContext, TEvent>)
                 );
 
-            string eventText = @event == NULL_EVENT ? "the transient event" : $"event "{ @event}
-            "";
+            string eventText = @event == NULL_EVENT ? "the transient event" : $"""event "{ @event}" """;
 
             if (hasNonLastUnguardedTarget)
             {

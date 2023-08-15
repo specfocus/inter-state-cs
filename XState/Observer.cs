@@ -1,17 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace XState
+﻿namespace XState
 {
-    public interface Observer<T>
+    public class Observer<T> : System.IObserver<T>
     {
-        void Next(T value);
+        private readonly Action<T> _onNext;
+        private readonly Action<Exception> _onError;
+        private readonly Action _onCompleted;
 
-        void Error(Exception err);
+        public Observer(Action<T> onNext, Action<Exception>? onError = null, Action? onCompleted = null)
+        {
+            _onNext = onNext ?? throw new ArgumentNullException(nameof(onNext));
+            _onError = onError ?? (_ => { });
+            _onCompleted = onCompleted ?? (() => { });
+        }
 
-        void Complete();
+        public void OnNext(T value) => _onNext(value);
+        public void OnError(Exception error) => _onError(error);
+        public void OnCompleted() => _onCompleted();
     }
 }

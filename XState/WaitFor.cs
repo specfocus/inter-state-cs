@@ -17,7 +17,7 @@
             Func<TEmitted, bool> predicate,
             WaitForOptions options = null
         )
-            where TActorRef : IActorRef<TEmitted, object>
+            where TActorRef : IActorRef<Event, TEmitted>
         {
             WaitForOptions resolvedOptions = options ?? new DefaultWaitForOptions();
 

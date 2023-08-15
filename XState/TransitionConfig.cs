@@ -88,7 +88,9 @@
         public string Description { get; set; }
     }
 
-    public class TransitionConfig<TContext, TEvent> where TEvent : EventObject
+    public class TransitionConfig<TContext, TEvent>
+        where TContext : class
+        where TEvent : Event
     {
         public string Event { get; set; } // Use appropriate type for event
                                           // Other properties of TransitionConfig

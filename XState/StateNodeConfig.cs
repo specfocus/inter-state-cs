@@ -30,7 +30,7 @@
         StatesConfig<TContext, TStateSchema, TEvent, TAction> States { get; set; }
 
         // Services to invoke upon entering/exiting
-        SingleOrArray<InvokeConfig<TContext, TEvent> | AnyStateMachine> Invoke { get; set; }
+        SingleOrArray<IInvokeConfig<TContext, TEvent> | AnyStateMachine> Invoke { get; set; }
 
         // Mapping of event types to transitions
         TransitionsConfig<TContext, TEvent> On { get; set; }
@@ -82,7 +82,7 @@
         int Order { get; set; }
 
         // Tags associated with the state node
-        SingleOrArray<string> Tags { get; set; }
+        SingleOrArray<string>? Tags { get; set; }
 
         // Whether to preserve action order
         bool PreserveActionOrder { get; set; }

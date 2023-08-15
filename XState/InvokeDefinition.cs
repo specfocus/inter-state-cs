@@ -1,4 +1,6 @@
-﻿namespace XState
+﻿using XState.Actions;
+
+namespace XState
 {
     public class MetaObject : Dictionary<string, object>
     {
@@ -6,7 +8,7 @@
 
     public interface IInvokeDefinition<TContext, TEvent> : IActivity<TContext, TEvent>
         where TContext : class
-        where TEvent : EventObject
+        where TEvent : Event
     {
         /// <summary>
         /// The source of the machine to be invoked, or the machine itself.
@@ -47,16 +49,18 @@
         where TContext : class
         where TEvent : Event
     {
-        public InvokeDefinition(InvokeSourceDefinition src)
-            : base(Actions.ActionTypes.Invoke.Value, src.Id)
+        private IInvokeConfig<TContext, TEvent> invokeConfig;
+
+        public InvokeDefinition(IInvokeConfig<TContext, TEvent> config)
+            : base(Actions.ActionTypes.Invoke.Value, config.Id ?? config.Src.Id)
         {
-            Src = src;
+            invokeConfig = config;
         }
 
         /// <summary>
         /// The source of the machine to be invoked, or the machine itself.
         /// </summary>
-        public InvokeSourceDefinition Src { get; } // You might need to define InvokeSourceDefinition
+        public InvokeSourceDefinition Src => invokeConfig.Src;
 
         /// <summary>
         /// If <c>true</c>, events sent to the parent service will be forwarded to the invoked service.

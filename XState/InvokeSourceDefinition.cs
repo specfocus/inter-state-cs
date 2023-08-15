@@ -6,7 +6,11 @@
 
         public static implicit operator InvokeSourceDefinition(string type) => new(type);
 
+        public static implicit operator InvokeSourceDefinition(AnyStateMachine machine) => new(machine);
+
         public InvokeSourceDefinition(string type) => Type = type;
+
+        public string Id { get; }
 
         public string Type { get; }
 

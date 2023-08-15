@@ -1,7 +1,6 @@
 ﻿namespace XState
 {
-    public interface IActorRef<TContext, TEvent> : IObserver<TContext>
-        where TContext : class
+    public interface IActorRef<TEvent, TEmitted> : ISubscribable<TEmitted>
         where TEvent : Event
     {
         string Id { get; }
@@ -15,8 +14,7 @@
         Func<object> ToJSON { get; }
     }
 
-    public class ActorRef<TContext, TEvent> : IActorRef<TContext, TEvent>
-        where TContext : class
+    public class ActorRef<TEvent, TEmitted> : Subscribable<TEmitted>, IActorRef<TEvent, TEmitted>
         where TEvent : Event
     {
         public string Id { get; }
@@ -28,20 +26,5 @@
         public Func<object> GetSnapshot { get; set; }
 
         public Func<object> ToJSON { get; set; }
-
-        void IObserver<TContext>.OnCompleted()
-        {
-            throw new NotImplementedException();
-        }
-
-        void IObserver<TContext>.OnError(Exception error)
-        {
-            throw new NotImplementedException();
-        }
-
-        void IObserver<TContext>.OnNext(TContext value)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

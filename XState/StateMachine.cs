@@ -1,8 +1,9 @@
-﻿global using AnyStateMachine = XState.StateMachine<object, object, object, object>;
-using XState.Actions;
+﻿global using AnyStateMachine = XState.StateMachine<object, XState.IStateSchema<object>, XState.Event, XState.Typestate<object>, XState.Actions.BaseActionObject, XState.ServiceMap, XState.TypegenFlag>;
 
 namespace XState
 {
+    using XState.Actions;
+
     public interface IStateMachine<
         TContext,
         TStateSchema,
@@ -23,12 +24,36 @@ namespace XState
         where TStateSchema : IStateSchema<TContext>
         where TEvent : Event
         where TTypestate : Typestate<TContext>
+        where TAction : BaseActionObject
         where TServiceMap : ServiceMap
         where TResolvedTypesMeta : TypegenFlag // TypegenDisabled
     {
-        string Id { get; }
+        StateMachine<
+            TContext,
+            TStateSchema,
+            TEvent,
+            TTypestate,
+            TAction,
+            TServiceMap,
+            TResolvedTypesMeta
+        >
+        WithConfig(
+            IInternalMachineOptions<TContext, TEvent> options,
+            TContext? context = null // Use appropriate type for context
+        );
 
-        Dictionary<string, StateNode<TContext, TStateSchema, TEvent, TTypestate, TServiceMap, TResolvedTypesMeta>> States { get; }
+        StateMachine<
+            TContext,
+            TStateSchema,
+            TEvent,
+            TTypestate,
+            TAction,
+            TServiceMap,
+            TResolvedTypesMeta
+        >
+        WithContext(
+            TContext context
+        );
 
         // Deprecated properties - these can be marked as internal or removed in C#
         // The __T... properties are acting as "phantom" types in TypeScript
@@ -65,45 +90,14 @@ namespace XState
        TServiceMap,
        TResolvedTypesMeta
    >
-       where TContext : class
-       where TStateSchema : IStateSchema<TContext>
-       where TEvent : Event
-       where TTypestate : Typestate<TContext>
-       where TServiceMap : ServiceMap
-       where TResolvedTypesMeta : TypegenFlag // TypegenDisabled
+        where TContext : class
+        where TStateSchema : IStateSchema<TContext>
+        where TEvent : Event
+        where TTypestate : Typestate<TContext>
+        where TAction : BaseActionObject
+        where TServiceMap : ServiceMap
+        where TResolvedTypesMeta : TypegenFlag // TypegenDisabled
     {
-        public static StateMachine<
-            TContext,
-            TStateSchema,
-            TEvent,
-            TTypestate,
-            TAction,
-            TServiceMap,
-            TResolvedTypesMeta
-        >
-        WithConfig(
-            IInternalMachineOptions<TContext, TEvent> options,
-            TContext context = null // Use appropriate type for context
-        )
-        {
-            throw new NotImplementedException();
-        }
-
-        public static StateMachine<
-            TContext,
-            TStateSchema,
-            TEvent,
-            TTypestate,
-            TAction,
-            TServiceMap,
-            TResolvedTypesMeta>
-        WithContext(
-            TContext context // Use appropriate type for context
-        )
-        {
-            throw new NotImplementedException();
-        }
-
         public StateMachine(
             ContextProvider<TContext> context,
             // The raw config used to create the machine.
@@ -115,18 +109,40 @@ namespace XState
         )
             : base(context, config, options, parent, key)
         {
-            Id = id;
-            States = states;
-            __TContext = tContext;
-            __TStateSchema = tStateSchema;
-            __TEvent = tEvent;
-            __TTypestate = tTypestate;
-            __TAction = tAction;
-            __TServiceMap = tServiceMap;
-            __TResolvedTypesMeta = tResolvedTypesMeta;
         }
 
-        public Dictionary<string, StateNode<TContext, TStateSchema, TEvent, TTypestate, TServiceMap, TResolvedTypesMeta>> States { get; set; }
+        public StateMachine<
+            TContext,
+            TStateSchema,
+            TEvent,
+            TTypestate,
+            TAction,
+            TServiceMap,
+            TResolvedTypesMeta
+        >
+        WithConfig(
+            IInternalMachineOptions<TContext, TEvent> options,
+            TContext? context = null // Use appropriate type for context
+        )
+        {
+            return this;
+        }
+
+        public StateMachine<
+            TContext,
+            TStateSchema,
+            TEvent,
+            TTypestate,
+            TAction,
+            TServiceMap,
+            TResolvedTypesMeta
+        >
+        WithContext(
+            TContext context
+        )
+        {
+            return this;
+        }
 
         // Deprecated properties - these can be marked as internal or removed in C#
         // The __T... properties are acting as "phantom" types in TypeScript

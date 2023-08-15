@@ -21,7 +21,7 @@
   };
 }
         */
-        public static IObserver<T> ToObserver<T>(
+        public static System.IObserver<T> ToObserver<T>(
             Action<T>? nextHandler = null,
             Action<Exception>? errorHandler = null,
             Action? completionHandler = null
