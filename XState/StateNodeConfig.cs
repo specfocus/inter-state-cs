@@ -11,6 +11,8 @@
         where TEvent : Event
         where TAction : BaseActionObject
     {
+        TContext? Context { get; set; }
+
         // The relative key of the state node
         string Key { get; set; }
 

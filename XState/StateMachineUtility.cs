@@ -45,9 +45,7 @@ namespace XState
             if (hasNonLastUnguardedTarget)
             {
                 Console.WriteLine(
-                    $"One or more transitions for {eventText} on state "{ stateNode.Id}
-                " are unreachable. " +
-                    "Make sure that the default transition is the last one defined."
+                    $"""One or more transitions for {eventText} on state "{ stateNode.Id}" are unreachable. Make sure that the default transition is the last one defined."""
                 );
             }
         }
