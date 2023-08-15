@@ -1,8 +1,23 @@
-﻿using XState.State.Actions;
-
-namespace XState
+﻿namespace XState
 {
-    public class ActorRef<TContext, TEvent> : IObserver<TContext>
+    public interface IActorRef<TContext, TEvent> : IObserver<TContext>
+        where TContext : class
+        where TEvent : Event
+    {
+        string Id { get; }
+
+        Action<TEvent> Send { get; }
+
+        Action Stop { get; }
+
+        Func<object> GetSnapshot { get; }
+
+        Func<object> ToJSON { get; }
+    }
+
+    public class ActorRef<TContext, TEvent> : IActorRef<TContext, TEvent>
+        where TContext : class
+        where TEvent : Event
     {
         public string Id { get; }
 
